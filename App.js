@@ -1,43 +1,37 @@
 import './App.css';
 import React from 'react';
-// CHILD COMPONENT
-// NESTED COMPONENT
-  function FormatName(user) 
-  {
-     return user.firstName + ' ' + user.lastName;
-  }
+import {useState} from 'react';
 
-const user = {firstName: 'ram',lastName: 'kumar'};
-class AppName extends React.Component
-{
-render(){
-  return(
-      <div className="AppName">
-      <h5>Expense Tracker</h5>
-      <h5> Hello, {FormatName(user)}!</h5>
-      <Tracker></Tracker>
-      </div>
-      )
-      }
-}
-class Tracker extends React.Component
-{
-render(){
-  return(
-      <div className="TraCker">
-      <h5>Expense Tracker app</h5>    
-      </div>
-       )
-}
-}
-// PARENT COMPONENT
 function App() {
-  return (
-    <div className="App">
-    <h1>this is my web page</h1>
-    <AppName></AppName>
-    <Tracker></Tracker>  
-    </div>
-  ); 
+    const[inputarr,setInputArr]=useState([])
+    const [inputdata,SetInputdata]=useState({ amount:"",notes:""})
+
+    function changehandle(e){
+        SetInputdata({...inputdata,[e.target.name]:e.target.value})
+        console.log();
+    }
+
+    let{amount,notes}=inputdata;
+    function changhandle(){
+        setInputArr([...inputarr,{amount,notes}])
+        console.log(inputdata)
+        var a=SetInputdata({amount:"",notes:""}) 
+        inputarr.push(a);
+
+    } 
+    function changehandle2(){
+        console.log(inputarr)
+
+    }
+    return (
+      <div className="App"> 
+        amount:<input type="" name="amount" value={inputdata.amount} onChange={changehandle}/><br></br>
+        <p></p>
+        notes:<input type="" name="notes" value={inputdata.notes} onChange={changehandle}/><br></br><br></br>
+        <button onClick={changhandle}>add</button><br></br><br></br>
+        <button onClick={changehandle2}>details</button>
+      </div>
+    ); 
 }
+
 export default App;
