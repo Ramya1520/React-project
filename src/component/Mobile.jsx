@@ -1,26 +1,32 @@
+// import React from 'react'
 
-import React from 'react'
-// component
 
-function Mobile({brandname="no name",brandprice,offer=0}){
-    return(
-        <>
-        <div class="card" >
-  
-  <div class="card-body">
-    <h5 class="card-title">{brandname}</h5>
-    <p class="card-text">{"price :"+brandprice}</p>
-    <p>{"offer :"+offer}</p>
-    
-  </div>
-</div>
+// class Tracker extends React.Component
+// {
+
+
+// render(){
+//   return(
+//     <form>
+//       <p>Available balance:<span id="initial_amount">1000</span></p>
+//       <h5>Amount :<input type="number" id="amount"  /></h5><br/>
+//       <h5>Notes  :<input type="" id="notes"/></h5><br/>
+//       <p><button value="text" >upload</button> </p>
+//       <p><button value="text" type="credit" id="credit">credit</button> </p>
+//       <p><button value="text" type="debit" id="debit">debit</button> </p>
+//     </form>
+//        )
+       
+// }
+// }
+
+// function Mobile(){
+  // return(
+  //     // <Tracker></Tracker> 
       
-        
-        </>
-    );
-}
-
-export default Mobile
+  // );
+// }
+// export default Mobile
 
 
 
