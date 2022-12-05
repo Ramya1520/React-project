@@ -24,7 +24,7 @@ function Input(){
         <p>Initial amount:<span  id="initial_amount">1000</span></p>
         <label>Amount:<input  type="number" id="amount" autoComplete='off' name="amount" value={currentTransaction.amount}onChange={changehandle}/></label><br></br>
         <label>Notes :<input type="text" id="nptes" autoComplete='off' name="notes" value={currentTransaction.notes} onChange={changehandle}/></label> <br></br>
-        <label>type :<input type="text" id="type" autoComplete='off' name="type" value={currentTransaction.type} onChange={changehandle}/></label> <br></br>
+        <label>Type :<input type="text" id="type" autoComplete='off' name="type" value={currentTransaction.type} onChange={changehandle}/></label> <br></br>
         <button onClick={changehandle2}>Add it</button>
         <button onClick={changhandle}>Generate</button>
         <table border={1} width="30%" cellPadding={10}>
