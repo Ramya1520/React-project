@@ -1,28 +1,30 @@
 import React, { useState } from 'react';
-function Input(){ 
-    const [inputarr,setInputarr]=useState([])
-    const [inputdata,SetInputdata]=useState ({amount:"",notes:"",type:""})
+import ReactDeleteRow from 'react-delete-row';
+var id=0;
+function Input(){     
+    const [totalTransaction,setTotalTransaction]=useState([])
+    const [currentTransaction,SetCurrentTransaction]=useState ({amount:"",notes:"",type:""})
     function changehandle(e){
-        SetInputdata({...inputdata,[e.target.name]: e.target.value})
-       
+        SetCurrentTransaction({...currentTransaction,[e.target.name]: e.target.value})
     }
     function changehandle2(){
-        console.log(inputarr)
+        id=id+1;
+        console.log(id)
+        setTotalTransaction([...totalTransaction,{amount,notes,type}])
     }
-    let{amount,notes,type}=inputdata;
+    let{amount,notes,type}=currentTransaction;
     function changhandle(){
-        setInputarr([...inputarr,{amount,notes,type}])
-        console.log(inputarr);
-        console.log(inputdata)
-        SetInputdata({amount:"",notes:"",type:""})
+        console.log(totalTransaction)
+        console.log(currentTransaction)
+        SetCurrentTransaction({amount:"",notes:"",type:""})
     }
-        return(
+    return(
         <div className="Input">
-        <h4>Expense Tracker</h4>
+        <h4>Expense Tracker</h4>   
         <p>Initial amount:<span  id="initial_amount">1000</span></p>
-        <label>Amount:<input  type="number" id="amount" autoComplete='off' name="amount" value={inputdata.amount}onChange={changehandle}/></label><br></br>
-        <label>Notes :<input type="text" id="amount" autoComplete='off' name="notes" value={inputdata.notes} onChange={changehandle}/></label> <br></br>
-        <label>type :<input type="text" id="type" autoComplete='off' name="type" value={inputdata.type} onChange={changehandle}/></label> <br></br>
+        <label>Amount:<input  type="number" id="amount" autoComplete='off' name="amount" value={currentTransaction.amount}onChange={changehandle}/></label><br></br>
+        <label>Notes :<input type="text" id="nptes" autoComplete='off' name="notes" value={currentTransaction.notes} onChange={changehandle}/></label> <br></br>
+        <label>type :<input type="text" id="type" autoComplete='off' name="type" value={currentTransaction.type} onChange={changehandle}/></label> <br></br>
         <button onClick={changehandle2}>Add it</button>
         <button onClick={changhandle}>Generate</button>
         <table border={1} width="30%" cellPadding={10}>
@@ -31,24 +33,24 @@ function Input(){
                 <td>Amount</td>
                 <td>Notes</td>
                 <td>Type</td>
+                <td>Action</td>
             </tr>
             {
-            inputarr.map(
-                (info,ind)=>{
-                        return(
-                            <tr key={ind}>
-                                <td>{info.amount}</td>
-                                <td>{info.notes}</td>
-                                <td>{info.type}</td>
-                        </tr>
-                    )
+            totalTransaction.map((item, i) => { return (
+            <ReactDeleteRow key={i} data={item} onDelete={ item => { return window.confirm(`Are you sure?`) }}>
+                                <td>{item.amount}</td>
+                                <td>{item.notes}</td>
+                                <td>{item.type}</td>
+            </ReactDeleteRow> )
                 }
             )
             }
             </tbody>
         </table>
         </div>
-        
         )
 }
 export default Input
+
+
+
