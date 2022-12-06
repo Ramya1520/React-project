@@ -1,56 +1,88 @@
-import React, { useState } from 'react';
-import ReactDeleteRow from 'react-delete-row';
-var id=0;
-function Input(){     
-    const [totalTransaction,setTotalTransaction]=useState([])
-    const [currentTransaction,SetCurrentTransaction]=useState ({amount:"",notes:"",type:""})
-    function changehandle(e){
-        SetCurrentTransaction({...currentTransaction,[e.target.name]: e.target.value})
-    }
-    function changehandle2(){
-        id=id+1;
-        console.log(id)
-        setTotalTransaction([...totalTransaction,{amount,notes,type}])
-    }
-    let{amount,notes,type}=currentTransaction;
-    function changhandle(){
-        console.log(totalTransaction)
-        console.log(currentTransaction)
-        SetCurrentTransaction({amount:"",notes:"",type:""})
-    }
-    return(
-        <div className="Input">
-        <h4>Expense Tracker</h4>   
-        <p>Initial amount:<span  id="initial_amount">1000</span></p>
-        <label>Amount:<input  type="number" id="amount" autoComplete='off' name="amount" value={currentTransaction.amount}onChange={changehandle}/></label><br></br>
-        <label>Notes :<input type="text" id="nptes" autoComplete='off' name="notes" value={currentTransaction.notes} onChange={changehandle}/></label> <br></br>
-        <label>Type :<input type="text" id="type" autoComplete='off' name="type" value={currentTransaction.type} onChange={changehandle}/></label> <br></br>
-        <button onClick={changehandle2}>Add it</button>
-        <button onClick={changhandle}>Generate</button>
-        <table border={1} width="30%" cellPadding={10}>
-            <tbody>
-            <tr>
-                <td>Amount</td>
-                <td>Notes</td>
-                <td>Type</td>
-                <td>Action</td>
-            </tr>
-            {
-            totalTransaction.map((item, i) => { return (
-            <ReactDeleteRow key={i} data={item} onDelete={ item => { return window.confirm(`Are you sure?`) }}>
-                                <td>{item.amount}</td>
-                                <td>{item.notes}</td>
-                                <td>{item.type}</td>
-            </ReactDeleteRow> )
-                }
-            )
-            }
-            </tbody>
-        </table>
-        </div>
-        )
-}
-export default Input
+import React, { useState, useRef } from "react"
+// import Submit from "./Submit"
+import './StyleSheet.css'
+import EditList from "./Update"
+function Crud() {
+    const [list, setList] = useState([])
+    const [listVal, setListVal] = useState({
+        id: '',
+        name: '',
+        age: ''
+    })
+    const [update, setUpdate] = useState(-1)
+    const idRef = useRef()
+    const nameRef = useRef()
+    const ageRef = useRef()
 
+    const valSubmit = (event) => {
+        event.preventDefault();
+        if (listVal.id && listVal.name && listVal.age) { setList([...list, listVal]) }
+        idRef.current.value = ''
+        nameRef.current.value = ''
+        ageRef.current.value = ''
+    }
+    function handleEdit(index) {
+        setUpdate(index)
+    }
+    function handleDelete(id) {
+        console.log("first")
+        const newList = list.filter((li) => (li.id !== id))
+        setList(newList)
+    }
+    function updateData(updatedData) {
+        console.log(updatedData, "CRUD")
+        const newList = list.map((li, index) => (update === index ?
+            { ...li, id: updatedData.id, name: updatedData.name, age: updatedData.age } : li))
+        setList(newList)
+        setUpdate(-1)
+    }
+    const handleUpdate = (event) => {
+        event.preventDefault();
+    }
+    return (
+        <div>
+            <h1>Expense Tracker</h1>
+            <p>Initial amount:<span>0</span></p>
+            <form className="forms" onSubmit={valSubmit}>
+                <label>Amount :</label>
+                <input type="number" value={list.id}
+                    onChange={e => setListVal({ ...listVal, id: e.target.value })} ref={idRef} />
+                <label>Notes :</label>
+                <input type="text" value={list.name}
+                    onChange={e => setListVal({ ...listVal, name: e.target.value })} ref={nameRef} />
+                <label>Type :</label>
+                <input type="text" value={list.age}
+                    onChange={e => setListVal({ ...listVal, age: e.target.value })} ref={ageRef} />
+                <button type="submit">Add</button>
+            </form>
+            <div className="myTable">
+                <form onClick={handleUpdate}>
+                    <table >
+                        <td>Amount</td>
+                        <td>Notes</td>
+                        <td>Type</td>
+                        <td>Action</td>
+
+                        {
+                            list.map((element, index) => (
+                                update === index ? <EditList current={element} update={updateData} /> :
+                                    <tr key={index}>
+                                        <td>{element.id}</td>
+                                        <td>{element.name}</td>
+                                        <td>{element.age}</td>
+                                        <td>
+                                            <button className="edit" onClick={() => handleEdit(index)}>Edit</button>
+                                            <button className="delete" onClick={() => handleDelete(element.id)}>Delete</button>
+                                        </td>
+                                    </tr>
+                            ))
+                        }
+                    </table>
+                </form>
+            </div>
+        </div>
+    )
+}
+export default Crud
 
 

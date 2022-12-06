@@ -1,0 +1,50 @@
+p{
+    text-align: center;
+    font-weight: bold;
+}
+h1{
+    text-align: center;
+}
+body{
+    background-color: rgb(13, 171, 81);
+    /* background-image: url("bc.jpeg"); */
+    }
+.myTable  {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: baseline;
+}
+ table td {
+   width: 200px;
+   height: 30px;
+   text-align: center;
+   background-color:rgb(163, 12, 12);
+   color: white;
+
+}
+
+table td button {
+    padding: 5px 10px;
+    border-radius: 5%;
+}
+table td button.edit{
+    border: 1px solid green;
+    background-color: lightgreen;
+    color: rgb(165, 82, 82);
+}
+table td button.edit:hover{
+    background-color: darkgreen;
+}
+table td button.delete{
+    border: 1px solid blue;
+    background-color: lightblue;
+    color: white;
+}
+table td button.delete:hover{
+    background-color: darkblue;
+}
+.forms{
+        text-align: center;
+        padding-bottom: 2%;    
+}
