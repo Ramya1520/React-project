@@ -1,11 +1,9 @@
 
 import './App.css';
-import Input from './component/Input';
-
+import Crud from './component/Input';
 function App() {
   return (
-   <Input></Input>
+   <Crud></Crud>
   );
 }
-
 export default App;
