@@ -5,34 +5,34 @@ import EditList from "./Update"
 function Crud() {
     const [list, setList] = useState([])
     const [listVal, setListVal] = useState({
-        id: '',
-        name: '',
-        age: ''
+        amount: '',
+        notes: '',
+        type: ''
     })
     const [update, setUpdate] = useState(-1)
-    const idRef = useRef()
-    const nameRef = useRef()
-    const ageRef = useRef()
+    const amountRef = useRef()
+    const notesRef = useRef()
+    const typeRef = useRef()
 
     const valSubmit = (event) => {
         event.preventDefault();
-        if (listVal.id && listVal.name && listVal.age) { setList([...list, listVal]) }
-        idRef.current.value = ''
-        nameRef.current.value = ''
-        ageRef.current.value = ''
+        if (listVal.amount && listVal.notes && listVal.type) { setList([...list, listVal]) }
+        amountRef.current.value = ''
+        notesRef.current.value = ''
+        typeRef.current.value = ''
     }
     function handleEdit(index) {
         setUpdate(index)
     }
-    function handleDelete(id) {
+    function handleDelete(amount) {
         console.log("first")
-        const newList = list.filter((li) => (li.id !== id))
+        const newList = list.filter((li) => (li.amount !== amount))
         setList(newList)
     }
     function updateData(updatedData) {
         console.log(updatedData, "CRUD")
         const newList = list.map((li, index) => (update === index ?
-            { ...li, id: updatedData.id, name: updatedData.name, age: updatedData.age } : li))
+            { ...li, amount: updatedData.amount, notes: updatedData.notes, type: updatedData.type } : li))
         setList(newList)
         setUpdate(-1)
     }
@@ -45,14 +45,14 @@ function Crud() {
             <p>Initial amount:<span>0</span></p>
             <form className="forms" onSubmit={valSubmit}>
                 <label>Amount :</label>
-                <input type="number" value={list.id}
-                    onChange={e => setListVal({ ...listVal, id: e.target.value })} ref={idRef} />
+                <input type="number" value={list.amount}
+                    onChange={e => setListVal({ ...listVal, amount: e.target.value })} ref={amountRef} />
                 <label>Notes :</label>
-                <input type="text" value={list.name}
-                    onChange={e => setListVal({ ...listVal, name: e.target.value })} ref={nameRef} />
+                <input type="text" value={list.notes}
+                    onChange={e => setListVal({ ...listVal, notes: e.target.value })} ref={notesRef} />
                 <label>Type :</label>
-                <input type="text" value={list.age}
-                    onChange={e => setListVal({ ...listVal, age: e.target.value })} ref={ageRef} />
+                <input type="text" value={list.type}
+                    onChange={e => setListVal({ ...listVal, type: e.target.value })} ref={typeRef} />
                 <button type="submit">Add</button>
             </form>
             <div className="myTable">
@@ -67,12 +67,12 @@ function Crud() {
                             list.map((element, index) => (
                                 update === index ? <EditList current={element} update={updateData} /> :
                                     <tr key={index}>
-                                        <td>{element.id}</td>
-                                        <td>{element.name}</td>
-                                        <td>{element.age}</td>
+                                        <td>{element.amount}</td>
+                                        <td>{element.notes}</td>
+                                        <td>{element.type}</td>
                                         <td>
                                             <button className="edit" onClick={() => handleEdit(index)}>Edit</button>
-                                            <button className="delete" onClick={() => handleDelete(element.id)}>Delete</button>
+                                            <button className="delete" onClick={() => handleDelete(element.amount)}>Delete</button>
                                         </td>
                                     </tr>
                             ))
