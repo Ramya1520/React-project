@@ -48,3 +48,13 @@ table td button.delete:hover{
         text-align: center;
         padding-bottom: 2%;    
 }
+
+.select{
+    text-align: center;
+    padding-bottom: 2%;
+}
+.button{
+    text-align: center;
+    padding-bottom: 2%;
+    
+}
