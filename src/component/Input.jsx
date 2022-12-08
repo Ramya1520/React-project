@@ -19,6 +19,7 @@ function Crud() {
 
     const valSubmit = (event) => {
         event.preventDefault();
+        if (listVal.amount && listVal.notes && listVal.type) { setList([...list, listVal]) }
         if (listVal.id && listVal.amount && listVal.notes && listVal.type) { setList([...list, listVal]) }
         idRef.current.value=''
         amountRef.current.value = ''
@@ -27,7 +28,7 @@ function Crud() {
     }
     function handleEdit(index) {
         setUpdate(index)
-    }
+    }   
     function handleDelete(id) {
         console.log("first")
         const newList = list.filter((li) => (li.id !== id))
@@ -35,20 +36,32 @@ function Crud() {
     }
     function updateData(updatedData) {
         console.log(updatedData, "CRUD")
+        
         const newList = list.map((li, index) => (update === index ?
-            { ...li,id: updatedData.id,amount: updatedData.amount, notes: updatedData.notes, type: updatedData.type } : li))
+            { ...li, id: updatedData.id,amount: updatedData.amount, notes: updatedData.notes, type: updatedData.type } : li))
         setList(newList)
         setUpdate(-1)
+     
     }
     const handleUpdate = (event) => {
         event.preventDefault();
     }
+    function detail(props){
+        console.log("@@@@@@@@@",val)
+    }
+    const val=1000
+    function credit (){
+       
+        const length = list.length;
+        console.log("length:"+length)
+
+    }
+    
     return (
         <div>
             <h1>Expense Tracker</h1>
-            <p><InitialValue/></p>
-          
-            <form className="forms" onSubmit={valSubmit}>
+            <p><InitialValue  initialAmount={val}/></p>            
+            <form className="forms" >
             <label>Id :</label>
             <input type="id" value={list.id}
               onChange={e => setListVal({ ...listVal, id: e.target.value })} ref={idRef} />
@@ -61,7 +74,11 @@ function Crud() {
                 <label>Type :</label>
                 <input type="text" value={list.type}
                     onChange={e => setListVal({ ...listVal, type: e.target.value })} ref={typeRef} />
-                <button type="submit">Add</button>
+                
+                <button type="submit" onClick={valSubmit}>Add</button>
+                <button>j</button>
+                <button value={""} >credit</button>
+                <button type="debit" value={""}>debit</button>
             </form>
             <div className="myTable">
                 <form onClick={handleUpdate}>
@@ -71,7 +88,7 @@ function Crud() {
                         <td>Notes</td>
                         <td>Type</td>
                         <td>Action</td>
-
+                       
                         {
                             list.map((element, index) => (
                                 update === index ? <EditList current={element} update={updateData} /> :
@@ -80,7 +97,6 @@ function Crud() {
                                         <td>{element.amount}</td>
                                         <td>{element.notes}</td>
                                         <td>{element.type}</td>
-
                                         <td>
                                             <button className="edit" onClick={() => handleEdit(index)}>Edit</button>
                                             <button className="delete" onClick={() => handleDelete(element.amount)}>Delete</button>
@@ -93,7 +109,6 @@ function Crud() {
             </div>
         </div>
     )
+  
 }
 export default Crud
-
-

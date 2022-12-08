@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+// import InitialValue from "./Initialvalue";
 
 function EditList(props) {
     const [updateState, setUpdateState] = useState({
@@ -29,5 +30,6 @@ function EditList(props) {
             <td><button type="submit" onClick={() => props.update(updateState)}>Update</button></td>
         </tr>
     )
+   
 }
 export default EditList
