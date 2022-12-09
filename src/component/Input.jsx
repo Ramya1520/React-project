@@ -4,8 +4,8 @@ import './StyleSheet.css'
 import EditList from "./Update"
 import InitialValue from './Initialvalue'
 function Crud() {
+   
     const [val,setVal]=useState(1000)
-
     const [list, setList] = useState([])
     const [listVal, setListVal] = useState({
         id:'',
@@ -13,20 +13,37 @@ function Crud() {
         notes: '',
         type: ''
     })
+    
     const [update, setUpdate] = useState(-1)
     const idRef=useRef()
     const amountRef = useRef()
     const notesRef = useRef()
     const typeRef = useRef()
-
     const valSubmit = (event) => {
         event.preventDefault();
-        if (listVal.amount && listVal.notes && listVal.type) { setList([...list, listVal]) }
+        // if (listVal.amount && listVal.notes && listVal.type) { setList([...list, listVal]) }
         if (listVal.id && listVal.amount && listVal.notes && listVal.type) { setList([...list, listVal]) }
         idRef.current.value=''
         amountRef.current.value = ''
         notesRef.current.value = ''
         typeRef.current.value = ''
+        
+    }
+    var a=[]
+    a.push(listVal);
+    console.log("==>a:",a)
+    var length = a.length;
+    console.log("length:"+length)
+    var current_amount=a[length-1].amount;
+    console.log("current value",current_amount)
+    console.log("val",val);
+    function credit (){ 
+        var balance=parseInt(current_amount)+parseInt(val);
+        setVal(balance);
+    }
+    function debit(){
+        var balance=parseInt(val)-parseInt(current_amount);
+        setVal(balance);
     }
     function handleEdit(index) {
         setUpdate(index)
@@ -46,29 +63,8 @@ function Crud() {
     const handleUpdate = (event) => {
         event.preventDefault();
     }
-    function credit (){
-        var length = list.length;
-        var index1=length-1
-        console.log("length:"+index1)
-
-       var current_amount=list[length-1].amount;
-        console.log("@@@@@@@@@",current_amount)
-        console.log("val",val);
-        var balance=parseInt(current_amount)+parseInt(val);
-        setVal(balance);
-    }
-    function debit(){
-        var length = list.length;
-        var index1=length-1
-        console.log("length:"+index1)
-        var current_amount=list[length-1].amount;
-        console.log("@@@@@@@@@",current_amount)
-        console.log("val",val);
-        var balance=parseInt(val)-parseInt(current_amount);
-        console.log(parseInt(current_amount))
-        console.log(parseInt(val))
-        setVal(balance);
-    }
+   
+        // var type = (type==='credit') ? "credit" : "debit";
     return (
         <div>
             <h1>Expense Tracker</h1>
@@ -87,16 +83,11 @@ function Crud() {
                 <input type="text" value={list.type}
                     onChange={e => setListVal({ ...listVal, type: e.target.value })} ref={typeRef} />   
             </form>
-            {/* <select>
-                <option><button type="submit" onClick={valSubmit}>Add</button></option>
-                <option>Choose</option>
-                <option><button type="credit" value={""} onSelect={credit}>credit</button></option>
-                <option><button type="debit" value={""} onSelect={debit}>debit</button></option>
-            </select> */}
             <div className="button">
-                <button type="submit" onClick={valSubmit}>Add</button>
-                <button type="credit" value={""} onClick={credit}>credit</button>
+            <button type="credit" value={""} onClick={credit}>credit</button>
                 <button type="debit" value={""} onClick={debit}>debit</button>
+                <button type="submit" onClick={valSubmit}>Add</button>
+                
                 </div>
             <div className="myTable">
                 <form onClick={handleUpdate}>
