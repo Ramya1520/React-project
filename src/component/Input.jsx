@@ -2,7 +2,10 @@ import React, { useState, useRef, useEffect } from "react"
 // import Submit from "./Submit"
 import './StyleSheet.css'
 import EditList from "./Update"
+var no=1
 function Crud() {
+   
+    console.log("no:",no)
     const [val, setVal] = useState(1000)
     const [list, setList] = useState([])
     const [listVal, setListVal] = useState({
@@ -13,7 +16,7 @@ function Crud() {
         bal: ''
     })
     const [update, setUpdate] = useState(-1)
-    const idRef = useRef()
+   
     const amountRef = useRef()
     const notesRef = useRef()
     const typeRef = useRef()
@@ -21,7 +24,12 @@ function Crud() {
     console.log("list val:", listVal)
     useEffect(() => {
         setListVal({ ...listVal, bal: val })
+     
     }, [val])
+    useEffect(()=>{
+        setListVal({...listVal, id:no})
+    },[no])
+
     var a = []
     a.push(listVal);
     console.log("a===", a)
@@ -33,24 +41,24 @@ function Crud() {
     function credit() {
         var balance = parseInt(current_amount) + parseInt(val);
         setVal(balance);
+    
     }
     function debit() {
         var balance = parseInt(val) - parseInt(current_amount);
         setVal(balance);
+      
     }
     const valSubmit = (event) => {
+        no=no+1
         event.preventDefault();
-        if (listVal.id && listVal.amount && listVal.notes && listVal.type && listVal.bal) { setList([...list, listVal]) }
-        idRef.current.value = ''
+        if (listVal.id || listVal.amount && listVal.notes && listVal.type && listVal.bal) { setList([...list, listVal]) }
+
         amountRef.current.value = ''
         notesRef.current.value = ''
-        typeRef.current.value = ''
-    }
-    function handleEdit(index) {
-        setUpdate(index)
+        typeRef.current.value = '' 
     }
     function handleDelete(id) {
-        console.log("first")
+        console.log("first",id)
         const newList = list.filter((li) => (li.id !== id))
         setList(newList)
     }
@@ -65,13 +73,14 @@ function Crud() {
         event.preventDefault();
     }
     return (
+        
         <div>
             <h1>Expense Tracker</h1>
             <p>InitialAmount:{val}</p>
             <form className="forms" >
-                <label>Id :</label>
+                {/* <label>Id :</label>
                 <input type="id" value={list.id}
-                    onChange={e => setListVal({ ...listVal, id: e.target.value })} ref={idRef} />
+                    onChange={e => setListVal({ ...listVal, id: e.target.value })} ref={idRef} /> */}
                 <label>Amount :</label>
                 <input type="number" value={list.amount}
                     onChange={e => setListVal({ ...listVal, amount: e.target.value })} ref={amountRef} />
@@ -107,8 +116,8 @@ function Crud() {
                                         <td>{element.type}</td>
                                         <td>{element.bal}</td>
                                         <td>
-                                            <button className="edit" onClick={() => handleEdit(index)}>Edit</button>
-                                            <button className="delete" onClick={() => handleDelete(element.amount)}>Delete</button>
+                                            {/* <button className="edit" onClick={() => handleEdit(index)}>Edit</button> */}
+                                            <button className="delete" onClick={() => handleDelete(element.id)}>Delete</button>
                                         </td>
                                     </tr>
                             ))
